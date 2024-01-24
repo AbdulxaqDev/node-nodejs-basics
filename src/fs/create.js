@@ -9,13 +9,11 @@ const fileConteent = 'I am fresh and young';
 const filePath     = join(__dirname, 'files', fileName);
 const errorMessage = 'FS operation failed';
 
-
-
 const create = async (fileConteent, filePath, errorMessage) => {
   try {
     await writeFile(filePath, fileConteent, {flag: "wx"});
   } catch (error) {
-   throw new Error(errorMessage);
+    throw new Error(errorMessage);
   }
 };
 
