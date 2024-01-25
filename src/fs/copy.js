@@ -17,7 +17,7 @@ async function isFolderExist(folderPath){
   }
 }
 
-const copy = async (srcFolderPath, destFolderPath, errorMessage) => {
+const copy = async () => {
   try {
 
     if(await isFolderExist(srcFolderPath) 
@@ -38,4 +38,4 @@ const copy = async (srcFolderPath, destFolderPath, errorMessage) => {
   }
 };
 
-await copy(srcFolderPath, destFolderPath, errorMessage);
+await copy();
