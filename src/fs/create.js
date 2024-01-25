@@ -1,16 +1,19 @@
-import { writeFile }     from 'fs/promises';
-import { __dirname } from './utils/dirname.mjs';
+import { writeFile } from "fs/promises";
+import { __dirname, errorMessage } from "./utils/helpers.js";
 
-const fileName     = 'fresh.txt';
-const fileConteent = 'I am fresh and young';
-const filePath     = __dirname(import.meta.url, 'files', fileName);
-const errorMessage = 'FS operation failed';
+const filePath = __dirname(import.meta.url, "files", "fresh.txt");
 
 const create = async () => {
   try {
-    await writeFile(filePath, fileConteent, {flag: "wx"});
+    await writeFile(filePath, "I am fresh and young", { flag: "wx" }).catch(
+      (error) => {
+        if (error) {
+          throw new Error(errorMessage);
+        }
+      }
+    );
   } catch (error) {
-    throw new Error(errorMessage);
+    console.error(error);
   }
 };
 

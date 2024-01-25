@@ -1,37 +1,28 @@
-import { access, constants, cp } from 'node:fs/promises';
-import { __dirname } from './utils/dirname.mjs';
+import { readdir, copyFile, mkdir } from "node:fs/promises";
+import { join } from "node:path";
 
-const destFolderPath = __dirname(import.meta.url, 'files_copy');
-const srcFolderPath  = __dirname(import.meta.url, 'files');
-const errorMessage   = 'FS operation failed';
+import { __dirname, isExist, errorMessage } from "./utils/helpers.js";
 
-async function isFolderExist(folderPath){
-  try {
-    await access(folderPath, constants.F_OK)
-    return true;
-  } catch (error) {
-    return false;
-  }
-}
+const destFolderPath = __dirname(import.meta.url, "files_copy");
+const srcFolderPath = __dirname(import.meta.url, "files");
 
 const copy = async () => {
+  const isSrcExist = await isExist(srcFolderPath);
+  const isDestExist = await isExist(destFolderPath);
+
   try {
+    if (isSrcExist && !isDestExist) {
+      const files = await readdir(srcFolderPath);
+      await mkdir(destFolderPath);
 
-    if(await isFolderExist(srcFolderPath) 
-      && !(await isFolderExist(destFolderPath))){
-
-        await cp(srcFolderPath, destFolderPath, {
-           recursive: true,
-           errorOnExist: true,
-           force: false,
-        });
-
-    }else{
-      throw new Exception();
+      for (const file of files) {
+        await copyFile(join(srcFolderPath, file), join(destFolderPath, file));
+      }
+    } else {
+      throw new Error(errorMessage);
     }
-
-  } catch (error) { 
-    throw new Error(errorMessage);
+  } catch (error) {
+    console.error(error);
   }
 };
 

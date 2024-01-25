@@ -1,36 +1,21 @@
-import { access, constants, rename as fsRename } from 'node:fs/promises';
-import { __dirname } from './utils/dirname.mjs';
+import { rename as fsRename } from "node:fs/promises";
+import { __dirname, isExist, errorMessage } from "./utils/helpers.js";
 
-const file = filename => ({
-  name: filename,
-  path: __dirname(import.meta.url, 'files', filename),
-});
-
-const newFile = file('properFilename.md');
-const oldFile = file('wrongFilename.txt');
-const errorMessage = 'FS operation failed';
-
-async function isFileExist(filePath){
-  try {
-    await access(filePath, constants.F_OK)
-    return true;
-  } catch (error) {
-    return false;
-  }
-}
+const newFile = __dirname(import.meta.url, "files", "properFilename.md");
+const oldFile = __dirname(import.meta.url, "files", "wrongFilename.txt");
 
 const rename = async () => {
-  const isOldFileExist = await isFileExist(oldFile.path);
-  const isNewFileExist = await isFileExist(newFile.path);
+  const isOldFileExist = await isExist(oldFile);
+  const isNewFileExist = await isExist(newFile);
 
   try {
-    if(isOldFileExist && !isNewFileExist){
-      await fsRename(oldFile.path, newFile.path);
-    }else{
-      throw new Exception();
+    if (isOldFileExist && !isNewFileExist) {
+      await fsRename(oldFile, newFile);
+    } else {
+      throw new Error(errorMessage);
     }
   } catch (error) {
-    throw new Error(errorMessage);
+    console.log(error);
   }
 };
 

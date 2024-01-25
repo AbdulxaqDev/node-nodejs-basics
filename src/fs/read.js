@@ -1,17 +1,17 @@
-import { readFile } from 'node:fs/promises';
-import { __dirname } from './utils/dirname.mjs';
-
-const errorMessage = 'FS operation failed';
+import { readFile } from "node:fs/promises";
+import { __dirname, errorMessage } from "./utils/helpers.js";
 
 const read = async () => {
-    try{
-        const filePath = __dirname(import.meta.url, 'files', 'fileToRead.txt');
-        const content = await readFile(filePath, { encoding: 'utf8' });
-        console.log(content);
-    } catch(error){
-        throw new Error(errorMessage)
-    }
+  try {
+    const filePath = __dirname(import.meta.url, "files", "fileToRead.txt");
+    const content = await readFile(filePath, { encoding: "utf8" }).catch(() => {
+      throw new Error(errorMessage);
+    });
 
+    console.log(content);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 await read();
