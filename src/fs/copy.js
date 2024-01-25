@@ -30,7 +30,7 @@ const copy = async () => {
         });
 
     }else{
-        throw new Error(errorMessage);
+      throw new Exception();
     }
 
   } catch (error) { 
