@@ -1,13 +1,10 @@
 import { readdir } from 'node:fs/promises';
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
+import { __dirname } from './utils/dirname.mjs';
 
 const errorMessage = 'FS operation failed';
 
 const list = async () => {
-    const folderPath = join(__dirname, 'files');
+    const folderPath = __dirname(import.meta.url, 'files');
     try {
         const files = await readdir(folderPath);
         console.log(files);

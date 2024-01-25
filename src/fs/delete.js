@@ -1,12 +1,9 @@
 import { access, constants, unlink } from 'node:fs/promises';
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
+import { __dirname } from './utils/dirname.mjs';
 
 const file = filename => ({
     name: filename,
-    path: join(__dirname, 'files', filename),
+    path: __dirname(import.meta.url, 'files', filename),
 });
 
 const fileToRemove = file('fileToRemove.txt');

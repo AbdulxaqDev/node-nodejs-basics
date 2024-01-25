@@ -1,11 +1,8 @@
 import { access, constants, cp } from 'node:fs/promises';
-import { dirname, join}  from 'path';
-import { fileURLToPath } from 'url';
+import { __dirname } from './utils/dirname.mjs';
 
-const __dirname      = dirname(fileURLToPath(import.meta.url));
-
-const destFolderPath = join(__dirname, 'files_copy');
-const srcFolderPath  = join(__dirname, 'files');
+const destFolderPath = __dirname(import.meta.url, 'files_copy');
+const srcFolderPath  = __dirname(import.meta.url, 'files');
 const errorMessage   = 'FS operation failed';
 
 async function isFolderExist(folderPath){
