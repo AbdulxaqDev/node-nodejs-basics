@@ -2,23 +2,44 @@ import { Worker, isMainThread, parentPort, workerData } from "worker_threads";
 import { cpus } from "os";
 import { __dirname } from "../helper/dirname.js";
 
+function workerCreator(n) {
+  return new Promise((resolve, reject) => {
+    const workerFilePath = __dirname(import.meta.url, "worker.js");
+
+    const worker = new Worker(workerFilePath, {
+      workerData: n,
+    });
+
+    worker.on("message", (result) => {
+      resolve(result);
+    });
+
+    worker.on("error", (error) => {
+      reject(error);
+    });
+  });
+}
+
 const performCalculations = async () => {
-  const workerFilePath = __dirname(import.meta.url, "worker.js");
+  const workersNum = cpus().length;
+  const workerPromises = [];
 
-  if (isMainThread) {
-    const workersNum = cpus().length;
+  for (let i = 0; i < workersNum; i++) {
+    workerPromises.push(
+      workerCreator({
+        n: 10 + (i + 1),
+      })
+        .then((result) => ({ data: result, status: "resolved" }))
+        .catch((e) => ({ data: null, status: "error" }))
+    );
+  }
 
-    for (let i = 0; i < workersNum; i++) {
-      const worker = new Worker(workerFilePath, {
-        workerData: {
-          id: i,
-          task: 10 + (i + 1),
-        },
-      });
-      worker.on("message", (message) => {
-        console.log(`Calculated by ${worker.threadId}: ${message}`);
-      });
-    }
+  try {
+    const promisesResult = await Promise.allSettled(workerPromises);
+    const results = promisesResult.map((promiseResult) => promiseResult.value);
+    console.log(results);
+  } catch (error) {
+    console.error("An error occurred:", error);
   }
 };
 
