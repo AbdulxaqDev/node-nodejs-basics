@@ -1,4 +1,4 @@
-import { __dirname } from "./dirname.js";
+import { __dirname } from "../../helper/dirname.js";
 import { isExist } from "./isFolderFileExist.js";
 import { errorMessage } from "./errorMessage.js";
 
