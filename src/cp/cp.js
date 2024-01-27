@@ -2,7 +2,6 @@ import { spawn } from "child_process";
 import { __dirname } from "../helper/dirname.js";
 
 const spawnChildProcess = async (args) => {
-  // Write your code here
   const childProcess = spawn(
     "node",
     [__dirname(import.meta.url, "files", "script.js")],
