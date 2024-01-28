@@ -1,5 +1,5 @@
-import { createReadStream } from "fs";
-import { stdout } from "process";
+import { createReadStream } from "node:fs";
+import { stdout } from "node:process";
 
 import { __dirname } from "../helper/dirname.js";
 

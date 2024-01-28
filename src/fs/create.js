@@ -1,4 +1,5 @@
-import { writeFile } from "fs/promises";
+import { writeFile } from "node:fs/promises";
+
 import { __dirname, errorMessage } from "./utils/helpers.js";
 
 const filePath = __dirname(import.meta.url, "files", "fresh.txt");

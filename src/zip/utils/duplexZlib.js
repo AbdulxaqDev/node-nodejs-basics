@@ -1,5 +1,5 @@
-import { createReadStream, createWriteStream } from "fs";
-import { createGzip, createGunzip } from "zlib";
+import { createReadStream, createWriteStream } from "node:fs";
+import { createGzip, createGunzip } from "node:zlib";
 
 export default async function duplexZlib(inputFilePath, outputFilePath, flag) {
   const readStream = createReadStream(inputFilePath);

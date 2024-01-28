@@ -1,5 +1,6 @@
-import { Worker, isMainThread, parentPort, workerData } from "worker_threads";
-import { cpus } from "os";
+import { cpus } from "node:os";
+import { Worker } from "node:worker_threads";
+
 import { __dirname } from "../helper/dirname.js";
 
 function workerCreator(n) {

@@ -1,4 +1,5 @@
 import { readFile } from "node:fs/promises";
+
 import { __dirname, errorMessage } from "./utils/helpers.js";
 
 const read = async () => {

@@ -1,4 +1,5 @@
 import { rename as fsRename } from "node:fs/promises";
+
 import { __dirname, isExist, errorMessage } from "./utils/helpers.js";
 
 const newFile = __dirname(import.meta.url, "files", "properFilename.md");

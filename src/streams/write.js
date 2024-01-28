@@ -1,5 +1,5 @@
-import { createWriteStream } from "fs";
-import { stdin } from "process";
+import { createWriteStream } from "node:fs";
+import { stdin } from "node:process";
 
 import { __dirname } from "../helper/dirname.js";
 
