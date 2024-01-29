@@ -1,4 +1,5 @@
-import { spawn } from "child_process";
+import { spawn } from "node:child_process";
+
 import { __dirname } from "../helper/dirname.js";
 
 const spawnChildProcess = async (args) => {

@@ -1,5 +1,5 @@
-import { stdin, stdout } from "process";
-import { Transform } from "stream";
+import { stdin, stdout } from "node:process";
+import { Transform } from "node:stream";
 
 console.log("Click 'Ctrl + D' to close input");
 

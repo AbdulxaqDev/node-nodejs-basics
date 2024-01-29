@@ -1,15 +1,14 @@
-import { createReadStream } from "fs";
-import { dirname, join } from "path";
-import { createHash } from "crypto";
-import { fileURLToPath } from "url";
+import { createReadStream } from "node:fs";
+import { createHash } from "node:crypto";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+import { __dirname } from "../helper/dirname.js";
+
 
 const calculateHash = async () => {
   const hash = createHash("sha256");
 
   const streamToHash = createReadStream(
-    join(__dirname, "files", "fileToCalculateHashFor.txt")
+    __dirname(import.meta.url, "files", "fileToCalculateHashFor.txt")
   );
 
   streamToHash.on("data", (data) => {

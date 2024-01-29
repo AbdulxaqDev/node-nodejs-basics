@@ -1,5 +1,5 @@
-import duplexZlib from "./utils/duplexZlib.js";
 import { __dirname } from "../helper/dirname.js";
+import duplexZlib from "./utils/duplexZlib.js";
 
 const compress = async () => {
   const inputFilePath = __dirname(

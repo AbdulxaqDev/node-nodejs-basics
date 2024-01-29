@@ -1,7 +1,7 @@
-import { dirname, sep } from "path";
-import { fileURLToPath } from "url";
-import { release, version } from "os";
-import { createServer as createServerHttp } from "http";
+import { dirname, sep } from "node:path";
+import { fileURLToPath } from "node:url";
+import { release, version } from "node:os";
+import { createServer as createServerHttp } from "node:http";
 
 import "./files/c.js";
 

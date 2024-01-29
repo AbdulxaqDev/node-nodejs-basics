@@ -1,4 +1,5 @@
 import { readdir } from "node:fs/promises";
+
 import { __dirname, errorMessage } from "./utils/helpers.js";
 
 const list = async () => {
