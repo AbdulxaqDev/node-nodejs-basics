@@ -12,11 +12,11 @@ function workerCreator(n) {
     });
 
     worker.on("message", (result) => {
-      resolve(result);
+      resolve({ status: "resolved", data: result });
     });
 
     worker.on("error", (error) => {
-      reject(error);
+      reject({ status: "error", data: null });
     });
   });
 }
@@ -26,22 +26,18 @@ const performCalculations = async () => {
   const workerPromises = [];
 
   for (let i = 0; i < workersNum; i++) {
-    workerPromises.push(
-      workerCreator({
-        n: 10 + (i + 1),
-      })
-        .then((result) => ({ data: result, status: "resolved" }))
-        .catch((e) => ({ data: null, status: "error" }))
-    );
+    const worker = workerCreator(10 + i);
+    workerPromises.push(worker);
   }
 
-  try {
-    const promisesResult = await Promise.allSettled(workerPromises);
-    const results = promisesResult.map((promiseResult) => promiseResult.value);
-    console.log(results);
-  } catch (error) {
-    console.error("An error occurred:", error);
-  }
+  const results = await Promise.allSettled(workerPromises).then(
+    (calculations) =>
+      calculations.map(({ status, value, reason }) =>
+        status === "fulfilled" ? value : reason
+      )
+  );
+
+  console.log(results);
 };
 
 await performCalculations();
